@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="card">
+    <h2>Welcome</h2>
+    <p>This platform enables KIU students to submit complaints, track progress, receive updates, and provide service feedback.</p>
+    <a class="btn" href="{{ url_for('register') }}">Create Account</a>
+    <a class="btn" href="{{ url_for('login') }}">Login</a>
+</section>
+{% endblock %}

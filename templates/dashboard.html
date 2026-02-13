@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Dashboard</h2>
+<section class="grid">
+    <div class="card">
+        <h3>Status Summary</h3>
+        <ul>
+            {% for row in summary %}
+                <li>{{ row.status }}: {{ row.count }}</li>
+            {% else %}
+                <li>No complaint data yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="card">
+        <h3>Notifications</h3>
+        <ul>
+            {% for n in notifications %}
+                <li>{{ n.created_at }} - {{ n.message }}</li>
+            {% else %}
+                <li>No notifications.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+<section class="card">
+    <h3>{% if role == 'student' %}My Complaints{% else %}All Complaints{% endif %}</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                {% if role != 'student' %}<th>Student</th>{% endif %}
+                <th>Category</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Track</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in complaints %}
+            <tr>
+                <td>{{ c.id }}</td>
+                {% if role != 'student' %}<td>{{ c.full_name }}</td>{% endif %}
+                <td>{{ c.category }}</td>
+                <td>{{ c.status }}</td>
+                <td>{{ c.created_at }}</td>
+                <td><a href="{{ url_for('track_complaint', complaint_id=c.id) }}">View</a></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6">No complaints found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}
