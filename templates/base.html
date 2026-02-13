@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIU Complaint Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Online Student Complaint Registration & Management - KIU</h1>
+        <nav>
+            {% if session.user_id %}
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                {% if session.role == 'student' %}
+                    <a href="{{ url_for('submit_complaint') }}">Submit Complaint</a>
+                {% endif %}
+                {% if session.role in ['staff', 'admin'] %}
+                    <a href="{{ url_for('reports') }}">Reports</a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}">Logout ({{ session.full_name }})</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

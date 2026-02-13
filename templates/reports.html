@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Report Summary</h2>
+<section class="grid">
+    <div class="card">
+        <h3>Complaint Types</h3>
+        <ul>
+            {% for row in by_category %}
+                <li>{{ row.category }}: {{ row.count }}</li>
+            {% else %}
+                <li>No data available.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="card">
+        <h3>By Status</h3>
+        <ul>
+            {% for row in by_status %}
+                <li>{{ row.status }}: {{ row.count }}</li>
+            {% else %}
+                <li>No data available.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+<section class="card">
+    <h3>Response Time & Feedback</h3>
+    <p>Average response time for resolved/closed complaints: <strong>{{ response_time.avg_hours or 'N/A' }} hours</strong></p>
+    <p>Average feedback rating: <strong>{{ feedback_summary.avg_rating or 'N/A' }}</strong> ({{ feedback_summary.total_feedback }} responses)</p>
+</section>
+{% endblock %}

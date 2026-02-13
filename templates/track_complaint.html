@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="card">
+    <h2>Complaint #{{ complaint.id }} - {{ complaint.category }}</h2>
+    <p><strong>Student:</strong> {{ complaint.full_name }}</p>
+    <p><strong>Status:</strong> {{ complaint.status }}</p>
+    <p><strong>Description:</strong> {{ complaint.description }}</p>
+    <p><strong>Submitted:</strong> {{ complaint.created_at }}</p>
+</section>
+
+<section class="card">
+    <h3>Progress Timeline</h3>
+    <ol>
+        {% for s in status_flow %}
+            <li class="{% if s == complaint.status %}active{% endif %}">{{ s }}</li>
+        {% endfor %}
+    </ol>
+</section>
+
+<section class="card">
+    <h3>Actions & Updates</h3>
+    <ul>
+        {% for u in updates %}
+            <li><strong>{{ u.created_at }}</strong>: {{ u.status }} by {{ u.full_name }} — {{ u.action_taken }}</li>
+        {% endfor %}
+    </ul>
+
+    {% if session.role in ['staff', 'admin'] %}
+    <hr>
+    <form method="post" action="{{ url_for('update_complaint', complaint_id=complaint.id) }}">
+        <label>New status</label>
+        <select name="status">
+            {% for s in status_flow %}
+                <option value="{{ s }}" {% if s == complaint.status %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+        </select>
+        <label>Action taken</label>
+        <textarea name="action_taken" required></textarea>
+        <button type="submit">Post Update</button>
+    </form>
+    {% endif %}
+</section>
+
+{% if session.role == 'student' %}
+<section class="card">
+    <h3>Feedback Module</h3>
+    {% if existing_feedback %}
+        <p>You already rated this complaint {{ existing_feedback.rating }}/5.</p>
+    {% else %}
+    <form method="post" action="{{ url_for('submit_feedback', complaint_id=complaint.id) }}">
+        <label>Rating (1-5)</label>
+        <select name="rating">
+            <option value="5">5 - Excellent</option>
+            <option value="4">4 - Good</option>
+            <option value="3">3 - Fair</option>
+            <option value="2">2 - Poor</option>
+            <option value="1">1 - Very Poor</option>
+        </select>
+        <label>Comments</label>
+        <textarea name="comments"></textarea>
+        <button type="submit">Submit Feedback</button>
+    </form>
+    {% endif %}
+</section>
+{% endif %}
+{% endblock %}

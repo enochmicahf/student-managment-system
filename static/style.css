@@ -1,0 +1,60 @@
+:root {
+    --bg: #f6f8fb;
+    --ink: #182230;
+    --brand: #1467c4;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+}
+header {
+    background: white;
+    padding: 14px 20px;
+    border-bottom: 1px solid #d8e0ea;
+}
+header h1 { font-size: 20px; margin: 0 0 8px; }
+nav a {
+    margin-right: 12px;
+    color: var(--brand);
+    text-decoration: none;
+}
+main { max-width: 1000px; margin: 20px auto; padding: 0 16px; }
+.card {
+    background: white;
+    border: 1px solid #dde3ed;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+.grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+label { display:block; font-weight: 600; margin-top: 8px; }
+input, select, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 4px;
+}
+button, .btn {
+    background: var(--brand);
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    display: inline-block;
+    width: auto;
+    padding: 10px 14px;
+    margin-top: 12px;
+}
+.flash { padding: 10px; border-radius: 6px; margin-bottom: 10px; }
+.flash.success { background: #e4f7e9; }
+.flash.danger { background: #fae4e4; }
+.flash.info { background: #e3f0fa; }
+.flash.warning { background: #fff6dd; }
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid #e0e6ef; padding: 8px; text-align: left; }
+ol li.active { font-weight: 700; color: var(--brand); }

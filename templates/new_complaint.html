@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="card">
+    <h2>Submit Complaint</h2>
+    <form method="post" enctype="multipart/form-data">
+        <label>Category</label>
+        <select name="category" required>
+            <option>Academic</option>
+            <option>Finance</option>
+            <option>Accommodation</option>
+            <option>Examination</option>
+            <option>Other</option>
+        </select>
+        <label>Description</label>
+        <textarea name="description" rows="6" required></textarea>
+        <label>Supporting file (optional)</label>
+        <input type="file" name="attachment">
+        <button type="submit">Submit</button>
+    </form>
+</section>
+{% endblock %}
